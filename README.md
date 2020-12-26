@@ -25,7 +25,7 @@ I decided to store images on the servers filesystem instead of MongoDB, because 
 
 - Node.js
 - EJS
-- MongoDB
+- MongoDB Atlas
 
 ## Libraries
 
@@ -36,3 +36,22 @@ I decided to store images on the servers filesystem instead of MongoDB, because 
 - Formidable
 - Mongoose
 - Bootswatch and Bootstrap
+
+## Run Locally
+
+- Clone the repo and then run the following commands:
+
+```$ cd shopify-challenge-2021```
+```$ npm install```
+```$ export URI=mongo-DB-URI-goes-here```
+```$ npm run dev```
+
+## To-DO
+
+- Dockerize application
+- CI/CD pipeline using GitHub actions or GitLab
+- Unit testing for client and server
+- Load balancing
+- Backups and rollbacks
+- Admin interface for statistics and resource management
+- Automatic scaling with AWS/Atlas
