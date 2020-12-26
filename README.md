@@ -5,7 +5,7 @@
 ## Live Demo
 
 Click the link below to view the live app
-- [**Heroku Instance**](https://herokuapp.com)
+- [**Heroku Instance (W.I.P)**](https://herokuapp.com)
 
 ## Features
 
