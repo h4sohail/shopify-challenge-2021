@@ -10,7 +10,7 @@ router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
 
 // Dashboard
 router.get('/dashboard', ensureAuthenticated, (req, res) => {
-  Image.find({user: req.user}, function(err, images) {
+  Image.find({user: req.user}, (err, images) => {
 	res.render('dashboard', {
 		user: req.user, 
 		userImages: images
@@ -20,7 +20,7 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 
 // repository
 router.get('/repository', ensureAuthenticated, (req, res) => {
-	Image.find({}, function(err, images) {
+	Image.find({}, (err, images) => {
 	   res.render('repository', {
 		   user: req.user, 
 		   images: images
