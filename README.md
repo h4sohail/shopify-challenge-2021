@@ -14,8 +14,8 @@ Click the link below to view the live app
 - Secure image upload, using sessions
 - Secure image download, using sessions
 - Upload with permissions, private or public
-- Dashboard page where you can manage your uploads
-- Repository page where you can view all public uploads
+- Dashboard page to manage self uploads
+- Repository page to view all public uploads
 
 ## Design Choices
 
