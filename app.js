@@ -1,19 +1,11 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-
-const mongoose = require('mongoose');
-const passport = require('passport');
-
 const flash = require('connect-flash');
 const session = require('express-session');
 
-// // Load Stock model
-// const Stock = require('./models/Stock');
-// const Order = require('./models/Order');
-
-// // Load Stock data
-// const { stockData, orderData } = require('./data') 
-
+const fs = require('fs');
+const mongoose = require('mongoose');
+const passport = require('passport');
 const app = express();
 
 // Passport Config
@@ -26,32 +18,6 @@ const db = require('./config/keys').mongoURI;
 mongoose.connect(db,{ useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
-
-// // Populate Stocks in MongoDB
-// stockData.forEach(stock => {
-//   const newStock = new Stock();
-//     newStock.name =  stock.name;
-//     newStock.symbol = stock.symbol;
-//     newStock.price = stock.price;
-//   newStock.save();
-// });
-
-// // Populate Orders in MongoDB
-// orderData.forEach(order => {
-//   const newOrder = new Order();
-
-//   newOrder.type =  order.type;
-//   newOrder.price = order.price;
-//   newOrder.fulfilled = order.fulfilled;
-//   newOrder.shares = order.shares;
-//   const filter = order.symbol
-//   Stock.findOne({ filter }).then(stock => {
-//     if (stock) {
-//       newOrder.stock = stock;
-//       newOrder.save();
-//     }
-//   });
-// });
 
 // EJS
 app.use(expressLayouts);
@@ -90,6 +56,12 @@ app.use(express.static(__dirname + '/views'));
 app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/users.js'));
 app.use('/repository', require('./routes/repository.js'));
+
+// Uploads Folder
+const dir = './uploads';
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
 
 const PORT = process.env.PORT || 3000;
 
