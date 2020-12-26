@@ -39,7 +39,7 @@ I decided to store images on the servers filesystem instead of MongoDB, because 
 
 ## Run Locally
 
-- Clone the repo and then run the following commands:
+Clone the repository and then run the following commands:
 
 ```$ cd shopify-challenge-2021```
 
