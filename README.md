@@ -1,2 +1,38 @@
-# shopify-challenge-2021
-Image Repository System
+# Shopify Backend Summer Internship Challenge 2021
+
+- [**Challenge Details**](https://docs.google.com/document/d/1ZKRywXQLZWOqVOHC4JkF3LqdpO3Llpfk_CkZPR8bjak/edit)
+
+## Live Demo
+
+Click the link below to view the live app
+- [**Heroku Instance**](https://herokuapp.com)
+
+## Features
+
+- Secure user registration and login
+- Secure routes with sessions
+- Secure image upload, using sessions
+- Secure image download, using sessions
+- Upload with permissions, private or public
+- Dashboard page where you can manage your uploads
+- Repository page where you can view all public uploads
+
+## Design Choices
+
+I decided to store images on the servers filesystem instead of MongoDB, because this would allow for easier caching, and would not strain the database. When an image is uploaded, it is randomly hashed, and saved on the filesystem, a database entry is added for the image including it's author, original name and the location on the file system.
+
+## Technologies
+
+- Node.js
+- EJS
+- MongoDB
+
+## Libraries
+
+- Express
+- Passport
+- bcrypt
+- crypto
+- Formidable
+- Mongoose
+- Bootswatch and Bootstrap
