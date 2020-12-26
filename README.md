@@ -42,8 +42,11 @@ I decided to store images on the servers filesystem instead of MongoDB, because 
 - Clone the repo and then run the following commands:
 
 ```$ cd shopify-challenge-2021```
+
 ```$ npm install```
+
 ```$ export URI=mongo-DB-URI-goes-here```
+
 ```$ npm run dev```
 
 ## To-DO
