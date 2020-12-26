@@ -1,0 +1,13 @@
+<div class="cHeader">
+    <div class="cTitle">Image Repository</div>
+    <% if (locals.user) { %>
+        <div class="cLinkBtnCont">
+            <div class="cLinkBtn cDashboardLink"><a href='/dashboard'>Dashboard</a></div>
+            <div class="cLinkBtn"><a href='/repository'>Repository</a></div>
+        </div>
+        
+        <div  class="cBtn"><a href="/users/logout">Logout</a></div>
+    <% } else { %> 
+        <div class="cBtn"><a href='/users/login'>Login</a></div>
+    <% } %> 
+</div>

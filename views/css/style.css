@@ -1,0 +1,90 @@
+.cHeader {
+    background-color: #0147bb;
+    width: 100%;
+    height: 60px;
+    color: #ffffff;
+}
+
+.cTitle {
+    position: relative;
+    display: inline-block;
+    left: 20px;
+    top: 16px;
+    font-size: 20px;
+}
+
+.cBtn {
+    position: relative;
+    float: right;
+    right: 20px;
+    top: 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.cBtn a { color: #ffffff; }
+
+.cJumbotron2 {
+    padding: 2rem 2rem;
+    background-color: #ffffff;
+}
+
+.cLinkBtnCont {
+    position: absolute;
+    top: 16px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 197px;
+}
+
+.cLinkBtn {
+    display: inline-block;
+    position: relative;
+    font-size: 16px;
+    margin-right: 20px;
+}
+
+.cLinkBtn a { color: #ffffff; }
+
+.cDashboardTitle {
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+
+.cUserWelcome, .cUserBalance {
+    top: 0;
+    position: relative;
+    text-align: center;
+}
+
+.nav-tabs .nav-link {
+    background-color: #1965e8;
+    border-color: #0346b7;
+}
+
+.nav-tabs .nav-link, .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    color: #ffffff;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #023da2;
+    background-color: #fff;
+    border-color: #0861f9 #012f7f #9dbef5;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link.active:hover {
+    color: #1866e8;
+}
+
+.cLinksCont {
+    position: relative;
+    left: 210px;
+    top: 20px;
+    border-bottom: none;
+}
+
+.cLinksCont li { padding-right: 30px; }
+
+.cLinksContLine { margin-top: 20px; }

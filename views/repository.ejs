@@ -1,0 +1,24 @@
+<div class="jumbotron cJumbotron2">
+	<hr class="my-4">
+	<p style="font-weight: bold;">All available images in the cloud</p>
+	<table class="table table-hover">
+	  <thead>
+		<tr>
+		  <th scope="col">Author</th>
+		  <th scope="col">Name</th>
+		  <th scope="col">Date</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		<% if (images) { %>
+			<%images.forEach(function(image) { %>
+			<tr>
+			<th scope="row"><%= image.author %></th>
+			<th scope="row"><%= image.name %></th>
+			<th scope="row"><%= image.date %></th>
+			</tr>
+			<%}); %>
+		<% } %>
+	  </tbody>
+	</table>
+</div>

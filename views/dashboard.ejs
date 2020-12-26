@@ -1,0 +1,43 @@
+<div class="jumbotron cJumbotron2">
+	<%- include('./partials/messages.ejs') %>
+	<h3 class="cUserWelcome">Hello <%= user.name %></h3>
+	<hr class="cLinksContLine">
+	<br>
+	<div id="myTabContent" class="tab-content">
+	  <div class="tab-pane fade active show" id="portfolio">
+		<div class="row mt-1">
+			<div class="col-md-6 m-auto">
+				<div class="card card-body">
+					<form action="/repository/upload" enctype="multipart/form-data" method="POST">
+						<label class="form-label" for="upload">Select images for upload (single image, multi-select or .zip for bulk upload)</label>
+						<input type="file" name="upload" multiple>
+						<input type="submit" class="btn btn-primary" value="Upload">
+					</form>	
+				</div>
+			</div>
+		</div>
+		<br>
+		<p style="font-weight: bold;">Your images in the cloud</p>
+		
+		<table class="table table-hover">
+		  <thead>
+			<tr>
+			  <th scope="col">Name</th>
+			  <th scope="col">Date</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<%if (userImages) { %>  
+				<%userImages.forEach(function(image) { %>
+				<tr>
+				<th scope="row"><%= image.name %></th>
+				<th scope="row"><%= image.date %></th>
+				</tr>
+				<%}); %>
+			<% } %>
+		  </tbody>
+		</table>
+	  </div>
+	  </div>
+	</div>
+</div>
