@@ -8,7 +8,13 @@ const Image = require('../models/Image');
 // Welcome Page
 router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
 
-// Dashboard
+// Register Page
+router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
+
+// Login Page
+router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
+
+// Dashboard Page
 router.get('/dashboard', ensureAuthenticated, (req, res) => {
   Image.find({user: req.user}, (err, images) => {
 	res.render('dashboard', {
@@ -18,7 +24,7 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
   });
 });
 
-// repository
+// Repository Page
 router.get('/repository', ensureAuthenticated, (req, res) => {
 	Image.find({private: false}, (err, images) => {
 	   res.render('repository', {
