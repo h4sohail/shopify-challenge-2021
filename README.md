@@ -5,7 +5,7 @@
 ## Live Demo
 
 Click the link below to view the live app
-- [**Heroku Instance**](https://sleepy-hamlet-33773.herokuapp.com/)
+- [**Live Demo (coming soon)**](https://herokuapp.com/)
 
 ## Features
 
