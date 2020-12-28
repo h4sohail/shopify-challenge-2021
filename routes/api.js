@@ -60,7 +60,7 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 			console.log(user.name + ' uploaded ' + file.name);
 			// to-do: add this to a log file
 		});
-		res.redirect('../dashboard');
+		res.redirect('../../dashboard');
 	} else {	
 		Image.find({user: req.user}, (err, images) => {
 			res.render('dashboard', {
