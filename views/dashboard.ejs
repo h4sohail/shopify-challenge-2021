@@ -9,9 +9,11 @@
 			<div class="col-md-6 m-auto">
 				<div class="card card-body">
 					<form action="/repository/upload" enctype="multipart/form-data" method="POST">
-						<label class="form-label" for="upload">Select images for upload (single image, multi-select or .zip for bulk upload)</label>
-						<input type="file" name="upload" multiple>
-						<input type="submit" class="btn btn-primary" value="Upload">
+						<label class="form-label" for="upload">Select images for upload (single select or multi-select)</label>
+						<input id="filename" type="file" name="upload" multiple>
+						<label class="form-label" for="private">Private</label>
+						<input name="private" id="private" type="checkbox">
+						<input style="margin: 2em;" type="submit" class="btn btn-primary" value="Upload">
 					</form>	
 				</div>
 			</div>

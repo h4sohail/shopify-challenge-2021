@@ -20,7 +20,7 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 
 // repository
 router.get('/repository', ensureAuthenticated, (req, res) => {
-	Image.find({}, (err, images) => {
+	Image.find({private: false}, (err, images) => {
 	   res.render('repository', {
 		   user: req.user, 
 		   images: images

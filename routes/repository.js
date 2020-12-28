@@ -27,7 +27,17 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
     const form = new formidable.IncomingForm(options);
 
     form.parse(req, (err, fields, files) => {
+	});
 
+	const newImage = new Image();
+
+	form.on('field', (name, field) => {
+
+		if (field == 'on') {
+			newImage.private = true;
+		} else {
+			newImage.private = false;
+		}
 	});
 
 	// hash the file name
@@ -36,15 +46,14 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 			errors.push({ msg: 'Please select a file or a .zip archive' });
 			return;
 		}
-
+		
 		const fileType = file.type.split('/').pop();
 
 		if (!fileTypeValidator(fileType)) {
-			errors.push({ msg: 'Only allowed file extensions are: jpg, jpeg, png, gif or zip' });
+			errors.push({ msg: 'Only allowed file extensions are: jpg, jpeg, png or gif' });
 			return;
 		}
 
-		const newImage = new Image();
 		newImage.user = user;
 		newImage.author = user.name;
 		newImage.name =  file.name;
@@ -56,7 +65,7 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 		newImage.save();
 
 	});
-	
+
 	if (errors.length == 0) {
 		form.on('file', (name, file) => {
 			console.log(user.name + ' uploaded ' + file.name);
@@ -72,6 +81,15 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 			});
 		});
 	}
+});
+
+router.post('/download', ensureAuthenticated, (req, res) => {
+	const image = req.image;
+	Image.findById({id: image}, (err, image) => {
+		if (image.user === req.user) {
+			res.download(image.storage);
+		}
+	});
 });
 
 // Delete
@@ -92,7 +110,7 @@ router.post('/delete', ensureAuthenticated, (req, res) => {
 
 
 const fileTypeValidator = fileType => {
-	return fileType == 'zip' || fileType == 'jpg' || fileType == 'png' || fileType == 'jpeg' || fileType == 'gif'
+	return fileType == 'jpg' || fileType == 'jpeg' || fileType == 'png' || fileType == 'gif'
 }
 
 module.exports = router;
