@@ -53,9 +53,9 @@ app.use((req, res, next) => {
 app.use(express.static(__dirname + '/views'));
 
 // Routes
-app.use('/', require('./routes/index.js'));
+app.use('/', require('./routes/views.js'));
 app.use('/users', require('./routes/users.js'));
-app.use('/repository', require('./routes/repository.js'));
+app.use('/repository', require('./routes/images.js'));
 
 // Uploads Folder
 const dir = './uploads';
