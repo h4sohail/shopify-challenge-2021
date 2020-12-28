@@ -26,13 +26,12 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 
     const form = new formidable.IncomingForm(options);
 
-    form.parse(req, (err, fields, files) => {
-	});
+    form.parse(req, (err, fields, files) => {});
 
 	const newImage = new Image();
 
 	form.on('field', (name, field) => {
-		if (field == 'on') {
+		if (name == 'visibility' && field == 'private') {
 			newImage.private = true;
 		} else {
 			newImage.private = false;
