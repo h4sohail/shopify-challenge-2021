@@ -19,7 +19,7 @@ Click the link below to view the live app
 
 ## Design Choices
 
-I decided to store images on the servers filesystem instead of MongoDB, because this would allow for easier caching, and would not stress the database. When an image is uploaded, it is randomly hashed, and saved on the filesystem, a database entry is added for the image including it's author, original name and the location on the file system.
+I decided to store images on the servers filesystem instead of MongoDB, because this would allow for easier caching, and would not stress the database. When an image is uploaded, it is randomly hashed, and saved on the filesystem, a database entry is added for the image including it's author, original name and the location on the filesystem.
 
 ## Technologies
 
