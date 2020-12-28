@@ -6,8 +6,6 @@ const passport = require('passport');
 // Load User model
 const User = require('../models/User');
 
-const { forwardAuthenticated } = require('../config/auth');
-
 // Register
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
