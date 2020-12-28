@@ -5,7 +5,7 @@
 ## Live Demo
 
 Click the link below to view the live app
-- [**Live Demo (coming soon)**](https://herokuapp.com/)
+- [**Live Demo**](http://cloud.hsohail.com)
 
 ## Features
 
@@ -26,6 +26,8 @@ I decided to store images on the servers filesystem instead of MongoDB, because 
 - Node.js
 - EJS
 - MongoDB Atlas
+- CentOS
+- Nginx
 
 ## Libraries
 
@@ -57,4 +59,3 @@ Clone the repository and then run the following commands:
 - Load balancing
 - Backups and rollbacks
 - Admin interface for statistics and resource management
-- Automatic scaling with AWS/Atlas
