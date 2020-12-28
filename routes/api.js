@@ -32,7 +32,6 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 	const newImage = new Image();
 
 	form.on('field', (name, field) => {
-
 		if (field == 'on') {
 			newImage.private = true;
 		} else {
