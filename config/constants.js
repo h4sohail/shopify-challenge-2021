@@ -1,5 +1,5 @@
 const PORT = process.env.PORT || 3000;
-const URL = process.env.APP_BASE_URL || 'http://localhost';
+const URL = process.env.URL || 'http://localhost';
 const APP_BASE_URL = URL + `:${PORT}`;
 const MONGO_URI = process.env.URI;
 const API_URL = 'api/v1';
