@@ -25,6 +25,10 @@ const ImageSchema = new mongoose.Schema({
   storage: {
     type: String,
     required: true
+  },
+  download: {
+	  type: String,
+	  required: true
   }
 });
 
