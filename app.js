@@ -2,20 +2,17 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const session = require('express-session');
-
 const fs = require('fs');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
 
-// Passport Config
+const {API_URL, PORT, MONGO_URI} = require('./config/constants');
+
 require('./config/passport')(passport);
 
-// DB Config
-const db = require('./config/keys').mongoURI;
-
 // Connect to MongoDB
-mongoose.connect(db,{ useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(MONGO_URI,{ useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
@@ -43,10 +40,10 @@ app.use(flash());
 
 // Global variables
 app.use((req, res, next) => {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  next();
+	res.locals.success_msg = req.flash('success_msg');
+	res.locals.error_msg = req.flash('error_msg');
+	res.locals.error = req.flash('error');
+	next();
 });
 
 // CSS
@@ -55,14 +52,12 @@ app.use(express.static(__dirname + '/views'));
 // Routes
 app.use('/', require('./routes/views.js'));
 app.use('/', require('./routes/users.js'));
-app.use('/api/v1/', require('./routes/api.js'));
+app.use(`/${API_URL}/`, require('./routes/api.js'));
 
 // Uploads Folder
 const dir = './uploads';
 if (!fs.existsSync(dir)){
     fs.mkdirSync(dir);
 }
-
-const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, console.log(`Server running on  http://localhost:${PORT}`));
