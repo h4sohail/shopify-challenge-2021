@@ -83,9 +83,11 @@ router.get('/download/:id', ensureAuthenticated, (req, res) => {
 		}
 
 		if (image.private) {
-			errors.push({ msg: 'You are not authorized!' });
-			renderDashboard(req, res, errors);
-			return;
+			if (image.user._id != user.id) {
+				errors.push({ msg: 'You are not authorized!' });
+				renderDashboard(req, res, errors);
+				return;
+			}
 		}
 		res.download(image.storage, image.name);
 	})
