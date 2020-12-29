@@ -15,6 +15,14 @@
 			<th scope="row"><%= image.author %></th>
 			<th scope="row"><%= image.name %></th>
 			<th scope="row"><%= image.date %></th>
+			<th scope="row"> 
+				<a href="<%= image.download %>">
+					<button id="<%= image.id %>" class="btn btn-success">
+						Download
+					<i class="fa fa-download fa-lg"></i>
+					</button>
+				</a>
+			</th>
 			</tr>
 			<%}); %>
 		<% } %>
