@@ -20,7 +20,8 @@
 							</div>
 							<div class="row justify-content-md-center">
 								<label class="form-label" for="upload">Allowed formats are .png, .jpg, .jpeg and .gif</label>
-								<input id="filename" type="file" name="upload" multiple>
+								<!-- <input id="filename" type="file" name="upload" multiple> -->
+								<input id="filename" type="file" name="upload">
 								<input type="submit" class="btn btn-primary" value="Upload">
 							</div>
 							<div class="row justify-content-md-center">
@@ -84,9 +85,9 @@
   		}).then(() => {
 			//http://localhost:3000/dashboard/api/v1/download/5fea6717e76ada410bc6967e
 			//http://localhost:3000/api/v1/download/5fea6717e76ada410bc6967e
-			const URL = window.location.origin + "/" + API + '/download/' + context.id;
-			console.log(URL);
+			// const URL = window.location.origin + "/" + API + '/download/' + context.id;
+			// console.log(URL);
+			// window.open(URL, '_blank');	
 		  }).catch();
-		  window.open(URL, '_blank');	
 	};
 </script>
