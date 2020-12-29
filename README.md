@@ -11,13 +11,13 @@ Click the link below to view the live app
 
 ## Features
 
-- Secure user registration and login
+- Secure user registration and login with encryption
 - Secure routes with sessions
-- Secure image upload, using sessions
-- Secure image download, using sessions
-- Upload with permissions, private or public
+- Secure image upload with validation
+- Secure image download with validation
+- Upload public or private images
 - Dashboard page to manage self uploads
-- Repository page to view all public uploads
+- Repository page to download public images
 
 ## Design Choices
 
