@@ -1,12 +1,11 @@
 const express = require('express');
-
 const fs = require('fs');
 const router = express.Router();
 const formidable = require('formidable');
 const crypto = require('crypto');
 
 const { ensureAuthenticated } = require('../config/auth');
-
+const { APP_BASE_URL, API_URL } = require('../config/constants');
 const Image = require('../models/Image');
 
 router.post('/upload', ensureAuthenticated, (req, res) => {
@@ -60,6 +59,8 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 			file.path = process.cwd() + '/uploads/' + file.name;
 			
 			newImage.storage = file.path;
+			newImage.download = `${APP_BASE_URL}/${API_URL}/download/${newImage._id}`;
+
 			newImage.save();
 			
 			res.redirect('../../dashboard');
@@ -81,7 +82,7 @@ router.get('/download/:id', ensureAuthenticated, (req, res) => {
 			return;
 		}
 
-		if (image.user._id != user.id) {
+		if (image.private) {
 			errors.push({ msg: 'You are not authorized!' });
 			renderDashboard(req, res, errors);
 			return;
