@@ -5,30 +5,26 @@ const router = express.Router();
 const formidable = require('formidable');
 const crypto = require('crypto');
 
-const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const { ensureAuthenticated } = require('../config/auth');
 
-// Load Image model
 const Image = require('../models/Image');
 
-
-// Upload Image
 router.post('/upload', ensureAuthenticated, (req, res) => {
 	const user = req.user;
 
 	options = {
-		multiples: true,
+		//multiples: true,
 		keepExtensions: true,
 		maxFileSize: 15 * 1024 * 1024, // 15mb
 		maxFields: 2,
 		maxFieldsSize: 1 * 1024 * 1024 // 1mb
 	}
 
-    const form = new formidable.IncomingForm(options);
-
-    form.parse(req, (err, fields, files) => {});
-
 	const newImage = new Image();
-
+	const form = new formidable.IncomingForm(options);
+	
+    form.parse(req);
+	
 	form.on('field', (name, field) => {
 		if (name == 'visibility' && field == 'private') {
 			newImage.private = true;
@@ -37,7 +33,7 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 		}
 	});
 
-	// hash the file name
+	// hash the file name and save it
     form.on('fileBegin', (name, file) => {
 		let errors = [];
 
@@ -90,11 +86,8 @@ router.get('/download/:id', ensureAuthenticated, (req, res) => {
 			renderDashboard(req, res, errors);
 			return;
 		}
-
 		res.download(image.storage, image.name);
-		
 	})
-	//renderDashboard(req, res);
 });
 
 // Delete
@@ -104,6 +97,7 @@ router.post('/delete/:id', ensureAuthenticated, (req, res) => {
 	
 	Image.findById(id, (err, image) => {
 		let errors = [];
+
 		if (!image) {
 			errors.push({ msg: 'No image(s) selected!' });
 			renderDashboard(req, res, errors);
@@ -134,7 +128,6 @@ router.post('/delete/:id', ensureAuthenticated, (req, res) => {
 			});
 		}
 	});
-	renderDashboard(req, res);
 });
 
 
