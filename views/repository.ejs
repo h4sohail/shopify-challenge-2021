@@ -6,6 +6,7 @@
 		  <th scope="col">Author</th>
 		  <th scope="col">Name</th>
 		  <th scope="col">Date</th>
+		  <th scope="col">Actions</th>
 		</tr>
 	  </thead>
 	  <tbody>
@@ -14,7 +15,8 @@
 			<tr>
 			<th scope="row"><%= image.author %></th>
 			<th scope="row"><%= image.name %></th>
-			<th scope="row"><%= image.date %></th>
+			<% const opts = { hour: 'numeric', year: 'numeric', month: 'narrow', day: 'numeric' } %>
+			<th scope="row"> <%= image.date.toLocaleDateString(opts) %> </th>
 			<th scope="row"> 
 				<a href="<%= image.download %>">
 					<button id="<%= image.id %>" class="btn btn-success">
