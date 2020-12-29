@@ -13,8 +13,6 @@ const Image = require('../models/Image');
 
 // Upload Image
 router.post('/upload', ensureAuthenticated, (req, res) => {
-	let errors = [];
-
 	const user = req.user;
 
 	options = {
@@ -41,73 +39,86 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 
 	// hash the file name
     form.on('fileBegin', (name, file) => {
-		if (!file) {
-			errors.push({ msg: 'Please select a file or a .zip archive' });
-			res.status(400).send('Please select a file!');
+		let errors = [];
+
+		if (file.name == '' || !file) {
+			errors.push({ msg: 'No image(s) selected!' });
+			renderDashboard(req, res, errors);
+			return;
 		}
 		
 		const fileType = file.type.split('/').pop().trim();
 
 		if (!fileTypeValidator(fileType)) {
-			errors.push({ msg: 'Only allowed file extensions are: jpg, jpeg, png or gif' });
-			res.status(400).send('Unsupported file format!');
+			errors.push({ msg: 'Unsupported file format!' });
+			renderDashboard(req, res, errors);
+			return;
 		}
 
-		newImage.user = user;
-		newImage.author = user.name;
-		newImage.name =  file.name;
-
-		file.name = crypto.randomBytes(32).toString('hex') + '.' + fileType;
-		file.path = process.cwd() + '/uploads/' + file.name;
-		
-		newImage.storage = file.path;
-		newImage.save();
-		
-	});
-
-	res.redirect('../../dashboard');
+		if (errors.length == 0) {
+			newImage.user = user;
+			newImage.author = user.name;
+			newImage.name =  file.name;
 	
-	if (errors.length != 0) {
-		renderDashboard(res, req, errors);
-	}
+			file.name = crypto.randomBytes(32).toString('hex') + '.' + fileType;
+			file.path = process.cwd() + '/uploads/' + file.name;
+			
+			newImage.storage = file.path;
+			newImage.save();
+			
+			res.redirect('../../dashboard');
+		}
+	});	
 });
 
 // Download
 router.get('/download/:id', ensureAuthenticated, (req, res) => {
-	let errors = [];
-
 	const user = req.user;
 	const id = req.params.id;
 
 	Image.findById(id, (err, image) => {
+		let errors = []
+
 		if (!image) {
+			errors.push({ msg: 'No image(s) selected!' });
+			renderDashboard(req, res, errors);
 			return;
 		}
 
-		if (image.user._id == user.id) {
-			res.download(image.storage, image.name);
+		if (image.user._id != user.id) {
+			errors.push({ msg: 'You are not authorized!' });
+			renderDashboard(req, res, errors);
+			return;
 		}
-	})
 
-	if (errors.length != 0) {
-		renderDashboard(res, req, errors);
-	}
+		res.download(image.storage, image.name);
+		
+	})
+	//renderDashboard(req, res);
 });
 
 // Delete
 router.post('/delete/:id', ensureAuthenticated, (req, res) => {
-	let errors = [];
-
 	const user = req.user
 	const id = req.params.id;
 	
 	Image.findById(id, (err, image) => {
+		let errors = [];
 		if (!image) {
+			errors.push({ msg: 'No image(s) selected!' });
+			renderDashboard(req, res, errors);
 			return;
 		}
 		
-		if (image.user._id == user.id) {
-			const path = image.storage;
+		if (image.user._id != user.id) {
+			errors.push({ msg: 'You are not authorized!' });
+			renderDashboard(req, res, errors);
+			return;
+		}
+	
+		const path = image.storage;
+
+		if (errors.length == 0) {
 			// check if file exists on filesystem and delete it
 			if (fs.existsSync(path)){
 				fs.unlink(path, (err) => {
@@ -123,10 +134,7 @@ router.post('/delete/:id', ensureAuthenticated, (req, res) => {
 			});
 		}
 	});
-
-	if (errors.length != 0) {
-		renderDashboard(res, req, errors);
-	}
+	renderDashboard(req, res);
 });
 
 
@@ -134,14 +142,14 @@ const fileTypeValidator = fileType => {
 	return fileType == 'jpg' || fileType == 'jpeg' || fileType == 'png' || fileType == 'gif'
 }
 
-const renderDashboard = (res, req, errors) => {
+const renderDashboard = (req, res, errors) => {
 	Image.find({user: req.user}, (err, images) => {
 		res.render('dashboard', {
+			errors,
 			user: req.user, 
-			userImages: images,
-			errors: errors
+			userImages: images
 		});
-	  });
+	});
 }
 
 module.exports = router;

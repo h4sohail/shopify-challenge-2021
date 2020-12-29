@@ -1,5 +1,4 @@
 <div class="jumbotron cJumbotron2">
-	<%- include('./partials/messages.ejs') %>
 	<h3 class="cUserWelcome">Hello <%= user.name %></h3>
 	<hr class="cLinksContLine">
 	<br>
@@ -23,6 +22,9 @@
 								<label class="form-label" for="upload">Allowed formats are .png, .jpg, .jpeg and .gif</label>
 								<input id="filename" type="file" name="upload" multiple>
 								<input type="submit" class="btn btn-primary" value="Upload">
+							</div>
+							<div class="row justify-content-md-center">
+								<%- include('./partials/messages.ejs') %>
 							</div>
 						</div>	
 					</form>	
