@@ -7,6 +7,8 @@
 Click the link below to view the live app
 - [**Live Demo**](http://cloud.hsohail.com)
 
+![](demo.gif)
+
 ## Features
 
 - Secure user registration and login
