@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
 
-const {API_URL, PORT, MONGO_URI} = require('./config/constants');
+const { API_URL, PORT, MONGO_URI } = require('./config/constants');
 
 require('./config/passport')(passport);
 
