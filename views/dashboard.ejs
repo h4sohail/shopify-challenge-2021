@@ -20,7 +20,7 @@
 								<input style="margin: 5px;" type="radio" name="visibility" value="private">
 							</div>
 							<div class="row justify-content-md-center">
-								<label class="form-label" for="upload">Select images for upload (single select or multi-select)</label>
+								<label class="form-label" for="upload">Allowed formats are .png, .jpg, .jpeg and .gif</label>
 								<input id="filename" type="file" name="upload" multiple>
 								<input type="submit" class="btn btn-primary" value="Upload">
 							</div>
@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<br>
-		<p style="font-weight: bold;">Your images in the cloud</p>
+		<h5 class="cUserWelcome">Your images in the cloud</h5>
 		
 		<table class="table table-hover">
 		  <thead>
@@ -43,8 +43,18 @@
 			<%if (userImages) { %>  
 				<%userImages.forEach(function(image) { %>
 				<tr>
-				<th scope="row"><%= image.name %></th>
-				<th scope="row"><%= image.date %></th>
+				<th scope="row"> <%= image.name %></th>
+				<th scope="row"> <%= image.date %></th>
+				<th scope="row"> 
+					<button onclick="downloadImage(this)" id="<%= image.id %>" class="btn btn-success">Download
+						<i class="fa fa-download fa-lg"></i>
+					</button>
+				</th>
+				<th scope="row"> 
+					<button onclick="deleteImage(this)" id="<%= image.id %>" class="btn btn-danger">Delete
+						<i class="fa fa-trash fa-lg"></i>
+					</button>
+				</th>
 				</tr>
 				<%}); %>
 			<% } %>
@@ -54,3 +64,27 @@
 	  </div>
 	</div>
 </div>
+
+<script>
+	const API = 'api/v1';
+
+	const deleteImage = context => {
+		fetch(API + '/delete/' + context.id, {
+    		method: 'post'
+  		}).then(() => {
+			location.reload();
+		  }).catch();
+	};
+
+	const downloadImage = context => {	
+		fetch(API + '/download/' + context.id, {
+    		method: 'get'
+  		}).then(() => {
+			//http://localhost:3000/dashboard/api/v1/download/5fea6717e76ada410bc6967e
+			//http://localhost:3000/api/v1/download/5fea6717e76ada410bc6967e
+			const URL = window.location.origin + "/" + API + '/download/' + context.id;
+			console.log(URL);
+		  }).catch();
+		  window.open(URL, '_blank');	
+	};
+</script>

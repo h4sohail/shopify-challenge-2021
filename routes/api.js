@@ -1,5 +1,6 @@
 const express = require('express');
 
+const fs = require('fs');
 const router = express.Router();
 const formidable = require('formidable');
 const crypto = require('crypto');
@@ -10,10 +11,10 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 const Image = require('../models/Image');
 
 
-// TO-DO: deal with zip uploads
 // Upload Image
 router.post('/upload', ensureAuthenticated, (req, res) => {
 	let errors = [];
+
 	const user = req.user;
 
 	options = {
@@ -42,14 +43,14 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
     form.on('fileBegin', (name, file) => {
 		if (!file) {
 			errors.push({ msg: 'Please select a file or a .zip archive' });
-			return;
+			res.status(400).send('Please select a file!');
 		}
 		
-		const fileType = file.type.split('/').pop();
+		const fileType = file.type.split('/').pop().trim();
 
 		if (!fileTypeValidator(fileType)) {
 			errors.push({ msg: 'Only allowed file extensions are: jpg, jpeg, png or gif' });
-			return;
+			res.status(400).send('Unsupported file format!');
 		}
 
 		newImage.user = user;
@@ -57,58 +58,90 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 		newImage.name =  file.name;
 
 		file.name = crypto.randomBytes(32).toString('hex') + '.' + fileType;
-		file.path = './uploads/' + file.name;
+		file.path = process.cwd() + '/uploads/' + file.name;
 		
 		newImage.storage = file.path;
 		newImage.save();
-
+		
 	});
 
-	if (errors.length == 0) {
-		form.on('file', (name, file) => {
-			console.log(user.name + ' uploaded ' + file.name);
-			// to-do: add this to a log file
-		});
-		res.redirect('../../dashboard');
-	} else {	
-		Image.find({user: req.user}, (err, images) => {
-			res.render('dashboard', {
-				user: req.user, 
-				userImages: images,
-				errors: errors
-			});
-		});
+	res.redirect('../../dashboard');
+	
+	if (errors.length != 0) {
+		renderDashboard(res, req, errors);
 	}
 });
 
-router.post('/download', ensureAuthenticated, (req, res) => {
-	const image = req.image;
-	Image.findById({id: image}, (err, image) => {
-		if (image.user === req.user) {
-			res.download(image.storage);
+// Download
+router.get('/download/:id', ensureAuthenticated, (req, res) => {
+	let errors = [];
+
+	const user = req.user;
+	const id = req.params.id;
+
+	Image.findById(id, (err, image) => {
+		if (!image) {
+			return;
 		}
-	});
+
+		if (image.user._id == user.id) {
+			res.download(image.storage, image.name);
+		}
+	})
+
+	if (errors.length != 0) {
+		renderDashboard(res, req, errors);
+	}
 });
 
 // Delete
-router.post('/delete', ensureAuthenticated, (req, res) => {
-    const images = req.images;
-    const user = req.user;
-    let errors = [];
+router.post('/delete/:id', ensureAuthenticated, (req, res) => {
+	let errors = [];
 
-    if (!images) {
-      errors.push({ msg: 'Please select image(s) to delete' });
-    }
+	const user = req.user
+	const id = req.params.id;
 	
-	// to-do: check if user owns the images
-  
-	// to-do: remove the images from DB, add them to a queue to be deleted from filesystem
+	Image.findById(id, (err, image) => {
+		if (!image) {
+			return;
+		}
+		
+		if (image.user._id == user.id) {
+			const path = image.storage;
+			// check if file exists on filesystem and delete it
+			if (fs.existsSync(path)){
+				fs.unlink(path, (err) => {
+					if (err) {
+						console.error(err);
+						return;
+					}
+				});	
+			}
 
+			Image.findByIdAndDelete(id, () => {
+				res.status(200).send('OK');
+			});
+		}
+	});
+
+	if (errors.length != 0) {
+		renderDashboard(res, req, errors);
+	}
 });
 
 
 const fileTypeValidator = fileType => {
 	return fileType == 'jpg' || fileType == 'jpeg' || fileType == 'png' || fileType == 'gif'
+}
+
+const renderDashboard = (res, req, errors) => {
+	Image.find({user: req.user}, (err, images) => {
+		res.render('dashboard', {
+			user: req.user, 
+			userImages: images,
+			errors: errors
+		});
+	  });
 }
 
 module.exports = router;
