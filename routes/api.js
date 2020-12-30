@@ -1,71 +1,85 @@
 const express = require('express');
+const multer = require('multer');
 const fs = require('fs');
 const router = express.Router();
-const formidable = require('formidable');
 const crypto = require('crypto');
+const path = require('path');
 
 const { ensureAuthenticated } = require('../config/auth');
 const { getBaseAppURL, API_URL } = require('../config/constants');
 const Image = require('../models/Image');
 
-router.post('/upload', ensureAuthenticated, (req, res) => {
-	const user = req.user;
-
-	options = {
-		//multiples: true,
-		keepExtensions: true,
-		maxFileSize: 15 * 1024 * 1024, // 15mb
-		maxFields: 2,
-		maxFieldsSize: 1 * 1024 * 1024 // 1mb
+// Multer storage
+const storage = multer.diskStorage({
+	destination: (req, file, callback) => {
+		callback(null, './uploads');
+	},
+	filename: (req, file, callback) => {
+		callback(null, crypto.randomBytes(32).toString('hex') + path.extname(file.originalname));
 	}
+});
 
-	const newImage = new Image();
-	const form = new formidable.IncomingForm(options);
-	
-    form.parse(req);
-	
-	form.on('field', (name, field) => {
-		if (name == 'visibility' && field == 'private') {
-			newImage.private = true;
-		} else {
-			newImage.private = false;
-		}
+// Multer file filter
+const fileFilter = (req, file, cb) => {
+	const fileType = file.mimetype;
+    if (fileType == 'image/jpg' || fileType == 'image/gif' || fileType == 'image/jpeg' || fileType == 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
+const upload = multer({ 
+	storage: storage, 
+	fileFilter: fileFilter, 
+	limits: { fileSize: 15 * 1024 * 1024, fieldSize: 1024 }
+}).array('upload', 10);
+
+const renderDashboard = (req, res, errors) => {
+	return Image.find({user: req.user}, (err, images) => {
+		res.render('dashboard', {
+			errors,
+			user: req.user, 
+			userImages: images
+		});
 	});
+}
 
-	// hash the file name and save it
-    form.on('fileBegin', (name, file) => {
+router.post('/upload', ensureAuthenticated, (req, res) => {
+	upload(req, res, err => {
 		let errors = [];
 
-		if (file.name == '' || !file) {
-			errors.push({ msg: 'No image(s) selected!' });
-			renderDashboard(req, res, errors);
-			return;
-		}
+		const user = req.user; 
+		const files = req.files;
+		const isPrivate = req.body.visibility == 'private';
 		
-		const fileType = file.type.split('/').pop().trim();
-
-		if (!fileTypeValidator(fileType)) {
-			errors.push({ msg: 'Unsupported file format!' });
+        if (err) {
+			errors.push({ error: 'Error uploading file!' });
 			renderDashboard(req, res, errors);
-			return;
 		}
 
-		if (errors.length == 0) {
-			newImage.user = user;
-			newImage.author = user.name;
-			newImage.name =  file.name;
-	
-			file.name = crypto.randomBytes(32).toString('hex') + '.' + fileType;
-			file.path = process.cwd() + '/uploads/' + file.name;
-			
-			newImage.storage = file.path;
-			newImage.download = `${getBaseAppURL()}/${API_URL}/download/${newImage._id}`;
+		files.forEach(file => {
+			const newImage = new Image();
 
-			newImage.save();
-			
-			res.redirect('../../dashboard');
-		}
-	});	
+			if (errors.length == 0) {
+				newImage.user = user;
+				newImage.author = user.name;
+				newImage.name =  file.originalname;
+
+				if (isPrivate) {
+					newImage.private = true;
+				} else {
+					newImage.private = false;
+				}
+				
+				newImage.storage = file.path;
+				newImage.download = `${getBaseAppURL()}/${API_URL}/download/${newImage._id}`;
+				newImage.save();
+				
+			}
+		});
+		res.redirect('../../dashboard')
+    });
 });
 
 // Download
@@ -79,16 +93,16 @@ router.get('/download/:id', ensureAuthenticated, (req, res) => {
 		if (!image) {
 			errors.push({ msg: 'No image(s) selected!' });
 			renderDashboard(req, res, errors);
-			return;
 		}
 
 		if (image.private) {
 			if (image.user._id != user.id) {
 				errors.push({ msg: 'You are not authorized!' });
 				renderDashboard(req, res, errors);
-				return;
 			}
 		}
+
+		res.status(200);
 		res.download(image.storage, image.name);
 	})
 });
@@ -104,13 +118,11 @@ router.post('/delete/:id', ensureAuthenticated, (req, res) => {
 		if (!image) {
 			errors.push({ msg: 'No image(s) selected!' });
 			renderDashboard(req, res, errors);
-			return;
 		}
 		
 		if (image.user._id != user.id) {
 			errors.push({ msg: 'You are not authorized!' });
 			renderDashboard(req, res, errors);
-			return;
 		}
 	
 		const path = image.storage;
@@ -127,25 +139,10 @@ router.post('/delete/:id', ensureAuthenticated, (req, res) => {
 			}
 
 			Image.findByIdAndDelete(id, () => {
-				res.status(200).send('OK');
+				res.status(200).send('SUCCESS: File deleted');
 			});
 		}
 	});
 });
-
-
-const fileTypeValidator = fileType => {
-	return fileType == 'jpg' || fileType == 'jpeg' || fileType == 'png' || fileType == 'gif'
-}
-
-const renderDashboard = (req, res, errors) => {
-	Image.find({user: req.user}, (err, images) => {
-		res.render('dashboard', {
-			errors,
-			user: req.user, 
-			userImages: images
-		});
-	});
-}
 
 module.exports = router;
