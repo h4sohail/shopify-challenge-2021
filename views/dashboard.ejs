@@ -7,7 +7,7 @@
 		<div class="row mt-1">
 			<div class="col-md-6 m-auto">
 				<div class="card card-body">
-					<form action="/api/v1/upload" enctype="multipart/form-data" method="POST">
+					<form onsubmit="return uploadImage(this);" id="uploadForm" action="/api/v1/upload" enctype="multipart/form-data" method="POST">
 						<div class="container">
 							<div class="row justify-content-md-center">
 								<h4>File Upload</h4>	
@@ -20,10 +20,11 @@
 							</div>
 							<div class="row justify-content-md-center">
 								<label class="form-label" for="upload">Allowed formats are .png, .jpg, .jpeg and .gif</label>
-								<!-- <input id="filename" type="file" name="upload" multiple> -->
-								<input id="filename" type="file" name="upload">
+								<input id="filename" type="file" name="upload" multiple>
+								<!-- <input id="filename" type="file" name="upload"> -->
 								<input type="submit" class="btn btn-primary" value="Upload">
 							</div>
+							<span id="status"></span>
 							<div class="row justify-content-md-center">
 								<%- include('./partials/messages.ejs') %>
 							</div>
@@ -90,4 +91,9 @@
 			location.reload();
 		  }).catch();
 	};
+	
+	const uploadImage = (context) => {
+		const status = document.getElementById('status');
+		status.textContent= 'File is uploading...';
+	}
 </script>
