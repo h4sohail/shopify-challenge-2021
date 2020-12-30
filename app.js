@@ -2,6 +2,7 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const session = require('express-session');
+const mongoStore = require('connect-mongo')(session);
 const fs = require('fs');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -27,7 +28,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: SECRET,
     resave: true,
-    saveUninitialized: true
+	saveUninitialized: true,
+	store: new mongoStore({ mongooseConnection: mongoose.connection })
   })
 );
 
