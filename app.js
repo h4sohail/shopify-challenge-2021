@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
 
-const { API_URL, PORT, MONGO_URI } = require('./config/constants');
+const { SECRET, API_URL, PORT, MONGO_URI } = require('./config/constants');
 
 require('./config/passport')(passport);
 
@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Express session
 app.use(session({
-    secret: 'secret',
+    secret: SECRET,
     resave: true,
     saveUninitialized: true
   })
