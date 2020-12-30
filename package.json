@@ -1,7 +1,7 @@
 {
-  "name": "node_passport_login",
+  "name": "image-repository",
   "version": "2.0.0",
-  "description": "Node.js authentication with Passport",
+  "description": "Node.js image repository with authentication",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -13,6 +13,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-ejs-layouts": "^2.5.0",
