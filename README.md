@@ -11,17 +11,16 @@ Click the link below to view the live app
 
 ## Features
 
-- Secure user registration and login with encryption
-- Secure routes with sessions
-- Secure image upload with validation
-- Secure image download with validation
-- Upload public or private images
-- Dashboard page to manage self uploads
-- Repository page to download public images
+- Secure user registration and login
+- Secure routes using sessions
+- Upload images with validation
+- Upload images with public or private visibility
+- Upload multiple images
+- Download images with public visibility
 
 ## Design Choices
 
-I decided to store images on the servers filesystem instead of MongoDB, because this would allow for easier caching, and would not stress the database. When an image is uploaded, it is randomly hashed, and saved on the filesystem, a database entry is added for the image including it's author, original name and the location on the filesystem.
+I decided to store images on the servers filesystem instead of MongoDB, because this would allow for easier caching, and would not stress the database. When an image is uploaded, it is randomly hashed, and saved on the filesystem, a database entry is added for the image that includes information about it's author, original name and the location on the filesystem.
 
 ## Technologies
 
@@ -35,11 +34,10 @@ I decided to store images on the servers filesystem instead of MongoDB, because 
 
 - Express
 - Passport
-- bcrypt
-- crypto
-- Formidable
+- bCrypt
+- Multer
 - Mongoose
-- Bootswatch and Bootstrap
+- Bootstrap
 
 ## Run Locally
 
