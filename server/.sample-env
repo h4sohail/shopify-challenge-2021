@@ -1,7 +1,14 @@
+# Port the backend server will run on
 PORT = 3000
+
+# Production URL for backend
 # Note: Leave PROD_URL blank if working on localhost
-PROD_URL =
-# If not working on localhost
+# If you are not working on localhost
 # PROD_URL = 'http://super.cool-domain.com'
+PROD_URL =
+
+# mongoDB URI (can use MongoDB Atlas here)
 MONGO_URI = 'mongodb+srv://USER:TEST@localhost'
-SECRET = 'super secret key'
+
+# Secret for auth sessions
+SECRET = 'of course i still love you'
