@@ -1,0 +1,7 @@
+PORT = 3000
+# Note: Leave PROD_URL blank if working on localhost
+PROD_URL =
+# If not working on localhost
+# PROD_URL = 'http://super.cool-domain.com'
+MONGO_URI = 'mongodb+srv://USER:TEST@localhost'
+SECRET = 'super secret key'
