@@ -65,17 +65,10 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 				newImage.user = user;
 				newImage.author = user.name;
 				newImage.name =  file.originalname;
-
-				if (isPrivate) {
-					newImage.private = true;
-				} else {
-					newImage.private = false;
-				}
-				
+				newImage.private = isPrivate;
 				newImage.storage = file.path;
 				newImage.download = `${getBaseAppURL()}/${API_URL}/download/${newImage._id}`;
 				newImage.save();
-				
 			}
 		});
 		res.redirect('../../dashboard')
