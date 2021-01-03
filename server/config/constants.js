@@ -7,7 +7,7 @@ const API_URL = 'api/v1';
 
 const getBaseAppURL = () => {
 	if (PROD_URL) {
-		return PROD_URL; // uses the default port
+		return PROD_URL; // uses the default port on the system
 	} else {
 		return URL + `:${PORT}`;
 	}
