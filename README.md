@@ -41,13 +41,19 @@ I decided to store images on the servers filesystem instead of MongoDB, because 
 
 ## Run Locally
 
-Clone the repository and then run the following commands:
+1) Clone the repository
+
+2) Run the following commands:
 
 ```$ cd shopify-challenge-2021```
 
-```$ npm install```
+```$ cp server/.sample-env server/.env```
 
-```$ export MONGO_URI=mongo-DB-URI-goes-here```
+3) Add the mongoDB URI within the .env file
+
+4) Run the following commands:
+
+```$ npm install```
 
 ```$ npm run dev```
 
