@@ -8,9 +8,11 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
 
+require('dotenv').config()
+require('./config/passport')(passport);
+
 const { SECRET, API_URL, PORT, MONGO_URI } = require('./config/constants');
 
-require('./config/passport')(passport);
 
 // Connect to MongoDB
 mongoose.connect(MONGO_URI,{ useNewUrlParser: true, useUnifiedTopology: true})
