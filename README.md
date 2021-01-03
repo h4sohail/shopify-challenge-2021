@@ -47,7 +47,7 @@ Clone the repository and then run the following commands:
 
 ```$ npm install```
 
-```$ export URI=mongo-DB-URI-goes-here```
+```$ export MONGO_URI=mongo-DB-URI-goes-here```
 
 ```$ npm run dev```
 
