@@ -1,0 +1,21 @@
+{
+  "name": "shopify-challenge-2021",
+  "version": "1.0.0",
+  "description": "Image repository for the Shopify backend challenge ",
+  "scripts": {
+	"build-server": "",
+	"build-client": "",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/h4sohail/shopify-challenge-2021.git"
+  },
+  "author": "Hamza Sohail",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/h4sohail/shopify-challenge-2021/issues"
+  },
+  "homepage": "https://github.com/h4sohail/shopify-challenge-2021#readme"
+}
