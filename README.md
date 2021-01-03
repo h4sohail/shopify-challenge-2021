@@ -53,9 +53,9 @@ I decided to store images on the servers filesystem instead of MongoDB, because 
 
 4) Run the following commands:
 
-```$ yarn install```
+```$ yarn build```
 
-```$ yarn run dev```
+```$ yarn start```
 
 ## To-DO
 

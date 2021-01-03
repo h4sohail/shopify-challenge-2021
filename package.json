@@ -5,6 +5,7 @@
   "scripts": {
 	"build-server": "",
 	"build-client": "",
+	"build": "build",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
