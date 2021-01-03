@@ -51,8 +51,9 @@ Clone the repository and then run the following commands:
 
 ```$ npm run dev```
 
-## To-DO
+## To-Do
 
+- Move to a React frontend (in-progress)
 - Dockerize application
 - CI/CD pipeline using GitHub actions or GitLab
 - Unit testing for client and server
