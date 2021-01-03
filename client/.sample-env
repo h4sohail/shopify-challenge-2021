@@ -1,0 +1,8 @@
+# Port the client server will run on
+REACT_APP_PORT = 3000
+
+# Production URL for client
+# Note: Leave REACT_APP_URL blank if working on localhost
+# If you are not working on localhost
+# REACT_APP_URL = 'http://super.cool-domain.com'
+REACT_APP_URL =
