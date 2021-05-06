@@ -120,21 +120,28 @@ To view the list of available APIs and their specifications, run the server and 
 
 List of available routes:
 
-**Auth routes**:\
-`POST /v1/auth/register` - register\
-`POST /v1/auth/login` - login\
-`POST /v1/auth/refresh-tokens` - refresh auth tokens\
-`POST /v1/auth/forgot-password` - send reset password email\
-`POST /v1/auth/reset-password` - reset password\
-`POST /v1/auth/send-verification-email` - send verification email\
-`POST /v1/auth/verify-email` - verify email
+**Image routes**:\
+`POST api/v1/images` - create a user\
+`GET api/v1/images` - get all users\
+`GET api/v1/users/:imageId` - get user\
+`PATCH api/v1/users/:imageId` - update user\
+`DELETE api/v1/users/:imageId` - delete user
 
 **User routes**:\
-`POST /v1/users` - create a user\
-`GET /v1/users` - get all users\
-`GET /v1/users/:userId` - get user\
-`PATCH /v1/users/:userId` - update user\
-`DELETE /v1/users/:userId` - delete user
+`POST api/v1/users` - create a user\
+`GET api/v1/users` - get all users\
+`GET api/v1/users/:userId` - get user\
+`PATCH api/v1/users/:userId` - update user\
+`DELETE api/v1/users/:userId` - delete user
+
+**Auth routes**:\
+`POST api/v1/auth/register` - register\
+`POST api/v1/auth/login` - login\
+`POST api/v1/auth/refresh-tokens` - refresh auth tokens\
+`POST api/v1/auth/forgot-password` - send reset password email\
+`POST api/v1/auth/reset-password` - reset password\
+`POST api/v1/auth/send-verification-email` - send verification email\
+`POST api/v1/auth/verify-email` - verify email
 
 ## Error Handling
 
