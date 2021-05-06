@@ -121,11 +121,11 @@ To view the list of available APIs and their specifications, run the server and 
 List of available routes:
 
 **Image routes**:\
-`POST api/v1/images` - create a user\
-`GET api/v1/images` - get all users\
-`GET api/v1/users/:imageId` - get user\
-`PATCH api/v1/users/:imageId` - update user\
-`DELETE api/v1/users/:imageId` - delete user
+`POST api/v1/images` - create image(s)\
+`GET api/v1/images` - get all images\
+`GET api/v1/images/:imageId` - get image\
+`PATCH api/v1/images/:imageId` - update image\
+`DELETE api/v1/images/:imageId` - delete image
 
 **User routes**:\
 `POST api/v1/users` - create a user\
