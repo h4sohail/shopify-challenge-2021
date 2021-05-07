@@ -19,6 +19,30 @@ components:
         name: fake name
         role: user
 
+    Image:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tags:
+          type: string
+        isPrivate:
+          type: string
+        file:
+          type: string
+          format: binary
+        user:
+          type: string
+      example:
+        id: 60587adb72009a0024d2f7c2
+        name: fakeFile
+        tags: "fake,superFake,image"
+        isPrivate: false
+        file: "{…file content…}"
+        user: 67083477606ea2d0980b526c
+
     Token:
       type: object
       properties:
