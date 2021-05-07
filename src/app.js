@@ -12,6 +12,7 @@ const { jwtStrategy } = require('./config/passport');
 const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
+const { upload } = require('./middlewares/upload');
 const ApiError = require('./utils/ApiError');
 
 const app = express();
@@ -26,6 +27,9 @@ app.use(helmet());
 
 // parse json request body
 app.use(express.json());
+
+// parse multipart/form-data request body
+app.use(upload);
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
