@@ -151,7 +151,7 @@ module.exports = router;
  * /users/{id}:
  *   get:
  *     summary: Get a user
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
+ *     description: Logged in users can only fetch their own user information. Admins can fetch any user.
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -178,7 +178,7 @@ module.exports = router;
  *
  *   patch:
  *     summary: Update a user
- *     description: Logged in users can only update their own information. Only admins can update other users.
+ *     description: Logged in users can only update their own information. Admins can update any user.
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -229,7 +229,7 @@ module.exports = router;
  *
  *   delete:
  *     summary: Delete a user
- *     description: Logged in users can delete only themselves. Only admins can delete other users.
+ *     description: Logged in users can only delete themselves. Admins can delete any user.
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
