@@ -9,13 +9,8 @@
 Running locally:
 
 ```bash
+yarn install  
 yarn dev
-```
-
-Running in production:
-
-```bash
-yarn start
 ```
 
 Testing:
