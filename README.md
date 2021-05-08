@@ -12,7 +12,7 @@ Running locally:
 # install npm packages
 yarn install
 
-# start development envoirnment 
+# start development environment  
 yarn dev
 ```
 
