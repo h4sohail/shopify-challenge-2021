@@ -3,15 +3,19 @@ const { Image } = require('../models');
 const ApiError = require('../utils/ApiError');
 /**
  * Create a image
- * @param {Object} imageBody
+ * @param {Object} file
+ * @param {Object} fields
  * @returns {Promise<Image>}
  */
 const createImage = async (file, fields) => {
+  if (file.size > 5 * 1024 * 1024) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'File must be less than 5mb');
+  }
   if (!file) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'File is required!');
+    throw new ApiError(httpStatus.BAD_REQUEST, 'File is required');
   }
   if (!fields.name) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Name is required!');
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Name is required');
   }
   const imageBody = { ...file, ...fields };
   const image = await Image.create(imageBody);
@@ -40,6 +44,7 @@ const queryImages = async (filter, options) => {
   } else {
     images = await Image.paginate(filter, options);
   }
+  images.results = images.results.filter((image) => !image.isPrivate);
   return images;
 };
 
