@@ -1,10 +1,6 @@
 const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
-// const createImage = {
-//   body: Joi.any().required(),
-// };
-
 const createImage = {
   file: Joi.object().keys({
     fieldname: Joi.string().required(),
