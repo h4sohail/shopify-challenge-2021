@@ -3,7 +3,7 @@ const config = require('../../src/config/config');
 
 const setupTestDB = () => {
   beforeAll(async () => {
-    await mongoose.connect(config.mongoose.url, config.mongoose.options);
+    await mongoose.connect('mongodb://localhost:27017/shopify-challenge-test', config.mongoose.options);
   });
 
   beforeEach(async () => {
