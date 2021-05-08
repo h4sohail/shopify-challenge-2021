@@ -2,7 +2,7 @@
 
 - [**Challenge Details**](https://docs.google.com/document/d/1ZKRywXQLZWOqVOHC4JkF3LqdpO3Llpfk_CkZPR8bjak/edit)
 
-- **Now with lots of tests** 98.2% Test Coverage!
+- **Now with lots of tests**: 98.2% Test Coverage!
 
 ## Commands
 
