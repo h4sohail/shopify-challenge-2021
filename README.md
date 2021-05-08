@@ -4,6 +4,7 @@
 
 ## Features
 
+- **Lots of  tests** 98.2% Test Coverage!
 - **NoSQL database**: [MongoDB](https://www.mongodb.com) object data modeling using [Mongoose](https://mongoosejs.com)
 - **Authentication and authorization**: using [passport](http://www.passportjs.org)
 - **Validation**: request data validation using [Joi](https://github.com/hapijs/joi)
@@ -123,7 +124,7 @@ List of available routes:
 **Image routes**:\
 `POST api/v1/images` - create image(s)\
 `GET api/v1/images` - get all images\
-`GET api/v1/images/:imageId` - get image\
+`GET api/v1/images/:imageId` - download an image\
 `PATCH api/v1/images/:imageId` - update image\
 `DELETE api/v1/images/:imageId` - delete image
 
