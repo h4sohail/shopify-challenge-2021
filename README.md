@@ -9,7 +9,10 @@
 Running locally:
 
 ```bash
-yarn install  
+# install npm packages
+yarn install
+
+# start development envoirnment 
 yarn dev
 ```
 
