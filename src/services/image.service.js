@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const { Image } = require('../models');
 const ApiError = require('../utils/ApiError');
+
 /**
  * Create a image
  * @param {Object} file
