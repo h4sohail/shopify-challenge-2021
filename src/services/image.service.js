@@ -59,15 +59,6 @@ const getImageById = async (id) => {
 };
 
 /**
- * Get image by email
- * @param {string} email
- * @returns {Promise<Image>}
- */
-const getImageByEmail = async (email) => {
-  return Image.findOne({ email });
-};
-
-/**
  * Update image by id
  * @param {ObjectId} imageId
  * @param {Object} updateBody
@@ -104,7 +95,6 @@ module.exports = {
   createImage,
   queryImages,
   getImageById,
-  getImageByEmail,
   updateImageById,
   deleteImageById,
 };
